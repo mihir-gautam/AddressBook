@@ -17,7 +17,7 @@ namespace AddressBook
             bool exist = true;
             while (exist)
             {
-                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Exit.");
+                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Exit.");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -34,6 +34,12 @@ namespace AddressBook
                             break;
                         }
                     case 3:
+                        {
+                            Console.WriteLine("Enter the first name of that person: ");
+                            newProgram.book.DeletePersonDetails();
+                            break;
+                        }
+                    case 4:
                         {
                             exist = false;
                             break;

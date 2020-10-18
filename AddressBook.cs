@@ -64,5 +64,19 @@ namespace AddressBook
                 Console.WriteLine("Contact details updated successfully!");
             }
         }
+        public void DeletePersonDetails()
+        {
+            string firstName = Console.ReadLine();
+            Contact deleteContact = FindPerson(firstName);
+            if (deleteContact == null)
+            {
+                Console.WriteLine("Address for {0} count not be found.", firstName);
+            }
+            else
+            {
+                Person.Remove(deleteContact);
+                Console.WriteLine("Existing contact details of {0} has been deleted succesfully", firstName);
+            }
+        }
     }
 }
