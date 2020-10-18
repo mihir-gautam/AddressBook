@@ -1,13 +1,14 @@
-﻿using System;
+﻿using AddressBook;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace AddressBook
+namespace AddressBookSystem
 {
-    class AddressBook
+    class AddressBooks
     {
         public ArrayList ContactList = new ArrayList();
         List<Contact> Person = new List<Contact>();
