@@ -1,14 +1,17 @@
 ﻿using AddressBook;
 using System;
+using System.Collections.Generic;
 
 namespace AddressBook
 {
     class Program
     {
-        AddressBook book;
+        AddressBooks book;
+        public HashSet<Contact> ContactSet;
         public Program()
         {
-            book = new AddressBook();
+            ContactSet = new HashSet<Contact>();
+            book = new AddressBooks();
         }
         static void Main(string[] args)
         {
@@ -17,6 +20,12 @@ namespace AddressBook
             bool exist = true;
             while (exist)
             {
+                string BookName;
+                HashSet<Contact> ContactSet = new HashSet<Contact>();
+                Dictionary<string, HashSet<Contact>> Book = new Dictionary<string, HashSet<Contact>>();
+
+                Console.WriteLine("Enter new address book name : ");
+                BookName = Console.ReadLine();
                 Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Exit.");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
@@ -24,9 +33,15 @@ namespace AddressBook
                     case 1:
                         {
                             newProgram.book.AddPerson();
-                            Console.WriteLine("Contact added!");
-                            Console.WriteLine("New count of contacts in address book : " + newProgram.book.ContactList.Count);
-                            break;
+                            if (newProgram.book.CheckDuplicate())
+                            { break; }
+                            else
+                            {
+                                Book.Add(BookName, ContactSet);
+                                Console.WriteLine("Contact added!");
+                                Console.WriteLine("New count of contacts in address book : " + Book.Count);
+                                break;
+                            }
                         }
                     case 2:
                         {
@@ -38,7 +53,7 @@ namespace AddressBook
                         {
                             Console.WriteLine("Enter the first name of that person: ");
                             newProgram.book.DeletePersonDetails();
-                            Console.WriteLine("New count of contacts in address book : " + newProgram.book.ContactList.Count);
+                            Console.WriteLine("New count of contacts in address book : " + Book.Count);
                             break;
                         }
                     case 4:

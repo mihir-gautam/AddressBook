@@ -7,10 +7,15 @@ using System.Text;
 
 namespace AddressBook
 {
-    class AddressBook
+    class AddressBooks
     {
-        public ArrayList ContactList = new ArrayList();
+        public HashSet<Contact> ContactSet = new HashSet<Contact>();
         List<Contact> Person = new List<Contact>();
+        HashSet<string> ContactName = new HashSet<string>();
+
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+
         public void AddPerson()
         {
             Contact contact = new Contact();
@@ -32,7 +37,24 @@ namespace AddressBook
             contact.Email = Console.ReadLine();
 
             Person.Add(contact);
-            ContactList.Add(Person);
+            ContactSet.Add(contact);
+            ContactName.Add(contact.FirstName);
+            ContactName.Add(contact.LastName);
+
+        }
+        public bool CheckDuplicate()
+        {
+            if (ContactName.Contains(FirstName) && ContactName.Contains(LastName))
+            {
+                Console.WriteLine("Contact details for this person already stored.");
+                return true;
+            }
+            else
+            {
+                ContactName.Add(FirstName);
+                ContactName.Add(LastName);
+                return false;
+            }
         }
         public Contact FindPerson(string firstName)
         {
@@ -79,7 +101,7 @@ namespace AddressBook
             {
                 Person.Remove(deleteContact);
                 Console.WriteLine("Existing contact details of {0} has been deleted succesfully", firstName);
-                ContactList.Remove(Person);
+                ContactSet.Remove(deleteContact);
             }
         }
     }
