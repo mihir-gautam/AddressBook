@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddressBookSystem;
+using System;
 
 namespace AddressBook
 {
@@ -7,6 +8,7 @@ namespace AddressBook
         static void Main(string[] args)
         {
             Console.WriteLine("Hello Welcome to the Address Book Problem");
+            Contact.CreateContact();
         }
     }
 }
