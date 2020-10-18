@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 namespace AddressBook
 {
     class AddressBook
     {
-
+        public ArrayList ContactList = new ArrayList();
         List<Contact> Person = new List<Contact>();
         public void AddPerson()
         {
@@ -30,6 +32,7 @@ namespace AddressBook
             contact.Email = Console.ReadLine();
 
             Person.Add(contact);
+            ContactList.Add(Person);
         }
         public Contact FindPerson(string firstName)
         {
@@ -76,6 +79,7 @@ namespace AddressBook
             {
                 Person.Remove(deleteContact);
                 Console.WriteLine("Existing contact details of {0} has been deleted succesfully", firstName);
+                ContactList.Remove(Person);
             }
         }
     }
