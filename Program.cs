@@ -26,7 +26,8 @@ namespace AddressBook
 
                 Console.WriteLine("Enter new address book name : ");
                 BookName = Console.ReadLine();
-                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Exit.");
+                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Search a contact" +
+                    "by city \n5. Exit.");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
@@ -57,6 +58,11 @@ namespace AddressBook
                             break;
                         }
                     case 4:
+                        {
+                            SearchContacts.SearchByCity();
+                            break;
+                        }
+                    case 5:
                         {
                             exist = false;
                             break;

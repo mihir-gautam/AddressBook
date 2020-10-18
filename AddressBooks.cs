@@ -21,8 +21,10 @@ namespace AddressBook
             Contact contact = new Contact();
             Console.Write("Enter First Name: ");
             contact.FirstName = Console.ReadLine();
+            ContactName.Add(contact.FirstName);
             Console.Write("Enter Last Name: ");
             contact.LastName = Console.ReadLine();
+            ContactName.Add(contact.LastName);
             Console.Write("Enter Address : ");
             contact.Address = Console.ReadLine();
             Console.Write("Enter City : ");
@@ -38,8 +40,6 @@ namespace AddressBook
 
             Person.Add(contact);
             ContactSet.Add(contact);
-            ContactName.Add(contact.FirstName);
-            ContactName.Add(contact.LastName);
 
         }
         public bool CheckDuplicate()
@@ -51,8 +51,6 @@ namespace AddressBook
             }
             else
             {
-                ContactName.Add(FirstName);
-                ContactName.Add(LastName);
                 return false;
             }
         }
