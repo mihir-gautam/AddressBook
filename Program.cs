@@ -1,6 +1,7 @@
 ﻿using AddressBook;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace AddressBook
 {
@@ -27,7 +28,7 @@ namespace AddressBook
                 Console.WriteLine("Enter new address book name : ");
                 BookName = Console.ReadLine();
                 Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Search a contact" +
-                    "by city \n 5. Search a contact by state \n6. Exit.");
+                    "by city \n5. Search a contact by state \n6. Exit.");
                 int option = int.Parse(Console.ReadLine());
                 switch (option)
                 {
