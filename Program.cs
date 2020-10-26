@@ -52,7 +52,8 @@ namespace AddressBook
                 while (exist)
                 {
                     Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Search a contact" +
-                        " by city \n5. Search a contact by state \n6. Count By City \n7. Count By State \n8. Show contacts in alphabetical order \n9. Exit");
+                        " by city \n5. Search a contact by state \n6. Count By City \n7. Count By State \n8. Show contacts in alphabetical order \n9. Sort by City" +
+                        " \n10. Sort by state \n11. Sort by zipcode \n12. Exit");
                     int option = int.Parse(Console.ReadLine());
                     switch (option)
                     {
@@ -115,6 +116,21 @@ namespace AddressBook
                                 break;
                             }
                         case 9:
+                            {
+                                addressBook.SortByCity();
+                                break;
+                            }
+                        case 10:
+                            {
+                                addressBook.SortByState();
+                                break;
+                            }
+                        case 11:
+                            {
+                                addressBook.SortByZip();
+                                break;
+                            }
+                        case 12:
                             {
                                 exist = false;
                                 break;
