@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -203,6 +204,50 @@ namespace AddressBook
             foreach (Contact c in contactList)
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.Phone + "\t" + c.Email);
+            }
+        }
+        public void ReadFromStreamReader()
+        {
+            string path = @"C:\Users\Mihir Gautam\source\repos\AddressBook\AddressBookTextFile.txt";
+            if (File.Exists(path))
+            {
+                using (StreamReader streamReader = File.OpenText(path))
+                {
+                    String fileData;
+                    while ((fileData = streamReader.ReadLine()) != null)
+                    {
+                        Console.WriteLine((fileData));
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("File does not exist.");
+            }
+        }
+        public void WriteWithStreamWriter(string bookName)
+        {
+            string path = @"C:\Users\Mihir Gautam\source\repos\AddressBook\AddressBookTextFile.txt";
+            if (File.Exists(path))
+            {
+                using (StreamWriter streamWriter = File.AppendText(path))
+                {
+                    foreach (Contact contact in contactList)
+                    {
+                        streamWriter.Write("\n"+contact.FirstName);
+                        streamWriter.Write(" "+contact.LastName);
+                        streamWriter.Write(" "+contact.Address);
+                        streamWriter.Write(" "+contact.City);
+                        streamWriter.Write(" "+contact.State);
+                        streamWriter.Write(" "+contact.Phone);
+                        streamWriter.Write(" "+contact.Email);
+                    }
+                    streamWriter.Close();
+                }
+            }
+            else
+            {
+                Console.WriteLine("File does not exist");
             }
         }
     }

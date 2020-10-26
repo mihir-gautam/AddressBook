@@ -136,6 +136,9 @@ namespace AddressBook
                                 break;
                             }
                     }
+                    addressBook.WriteWithStreamWriter(addBookName);
+                    Console.WriteLine("Contact details have been written to file successfully");
+                    addressBook.ReadFromStreamReader();
                 }
             }
         }
