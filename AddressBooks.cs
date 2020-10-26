@@ -149,5 +149,20 @@ namespace AddressBook
             }
             return contact;
         }
+        public void SortByNameInAlphabeticalOrder()
+        {
+            List<string> SortedByName = new List<string>();
+            foreach (Contact contact in contactList)
+            {
+                string name = contact.FirstName.ToString();
+                SortedByName.Add(name);
+            }
+            SortedByName.Sort();
+            foreach (string name in SortedByName)
+            {
+                Console.WriteLine(name);
+            }
+
+        }
     }
 }
