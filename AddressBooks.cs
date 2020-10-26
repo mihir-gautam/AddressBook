@@ -7,24 +7,28 @@ using System.Text;
 
 namespace AddressBook
 {
-    class AddressBooks
+    public class AddressBooks
     {
+        public List<Contact> contactList;
         public HashSet<Contact> ContactSet = new HashSet<Contact>();
         List<Contact> Person = new List<Contact>();
         HashSet<string> ContactName = new HashSet<string>();
-
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
+
+        public AddressBooks()
+        {
+            contactList = new List<Contact>();
+
+        }
 
         public void AddPerson()
         {
             Contact contact = new Contact();
             Console.Write("Enter First Name: ");
             contact.FirstName = Console.ReadLine();
-            ContactName.Add(contact.FirstName);
             Console.Write("Enter Last Name: ");
             contact.LastName = Console.ReadLine();
-            ContactName.Add(contact.LastName);
             Console.Write("Enter Address : ");
             contact.Address = Console.ReadLine();
             Console.Write("Enter City : ");
@@ -38,9 +42,7 @@ namespace AddressBook
             Console.Write("Enter Email ID : ");
             contact.Email = Console.ReadLine();
 
-            Person.Add(contact);
-            ContactSet.Add(contact);
-
+            contactList.Add(contact);
         }
         public bool CheckDuplicate()
         {
@@ -56,7 +58,7 @@ namespace AddressBook
         }
         public Contact FindPerson(string firstName)
         {
-            Contact toFind = Person.Find((person) => person.FirstName == firstName);
+            Contact toFind = contactList.Find((person) => person.FirstName == firstName);
             return toFind;
         }
         public void EditPersonDetails()
@@ -97,10 +99,55 @@ namespace AddressBook
             }
             else
             {
-                Person.Remove(deleteContact);
+                contactList.Remove(deleteContact);
                 Console.WriteLine("Existing contact details of {0} has been deleted succesfully", firstName);
-                ContactSet.Remove(deleteContact);
             }
+        }
+        public void SearchContactByCity(string city)
+        {
+
+            foreach (var contact in contactList)
+            {
+                if (contact.City == city)
+                {
+                    Console.WriteLine("Name :" + contact.FirstName + " " + contact.LastName + "\nAddress :" + contact.Address + "   ZipCode :" + contact.ZipCode + "\nPhone No :" + contact.Phone + "   Email :" + contact.Email);
+                }
+            }
+
+        }
+        public void SearchContactByState(string state)
+        {
+
+            foreach (var contact in contactList)
+            {
+                if (contact.State == state)
+                {
+                    Console.WriteLine("Name :" + contact.FirstName + " " + contact.LastName + "\nAddress :" + contact.Address + "   ZipCode :" + contact.ZipCode + "\nPhone No :" + contact.Phone + "   Email :" + contact.Email);
+                }
+            }
+
+        }
+        public List<Contact> GetContactByCity(string city)
+        {
+            List<Contact> contact = new List<Contact>();
+            foreach (Contact c in contactList)
+            {
+                if (c.City.Equals(city))
+                    contact.Add(c);
+
+            }
+            return contact;
+        }
+        public List<Contact> GetContactByState(string State)
+        {
+            List<Contact> contact = new List<Contact>();
+            foreach (Contact c in contactList)
+            {
+                if (c.State.Equals(State))
+                    contact.Add(c);
+
+            }
+            return contact;
         }
     }
 }

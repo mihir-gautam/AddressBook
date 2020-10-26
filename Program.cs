@@ -1,78 +1,120 @@
 ﻿using AddressBook;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 
 namespace AddressBook
 {
     class Program
     {
-        AddressBooks book;
-        public HashSet<Contact> ContactSet;
-        public Program()
-        {
-            ContactSet = new HashSet<Contact>();
-            book = new AddressBooks();
-        }
         static void Main(string[] args)
         {
-            Program newProgram = new Program();
-            Console.WriteLine("Welcome to the Address Book Program!");
-            bool exist = true;
-            while (exist)
-            {
-                string BookName;
-                HashSet<Contact> ContactSet = new HashSet<Contact>();
-                Dictionary<string, HashSet<Contact>> Book = new Dictionary<string, HashSet<Contact>>();
+            int choice = 0;
+            bool flag = true;
+            string addBookName = "";
 
-                Console.WriteLine("Enter new address book name : ");
-                BookName = Console.ReadLine();
-                Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Search a contact" +
-                    "by city \n5. Search a contact by state \n6. Exit.");
-                int option = int.Parse(Console.ReadLine());
-                switch (option)
+            MultipleAddressBooks multipleAddressBooks = new MultipleAddressBooks();
+            AddressBooks addressBook = null;
+            Console.WriteLine("Welcome to the Address Book Program!");
+            while (true)
+            {
+
+                Console.WriteLine("1.Add Address Book\n2.Open Address Book");
+                choice = Convert.ToInt32(Console.ReadLine());
+
+                switch (choice)
                 {
                     case 1:
+                        Console.WriteLine("Enter name of Address Book");
+                        addBookName = Console.ReadLine();
+                        multipleAddressBooks.AddAddressBook(addBookName);
+                        addressBook = multipleAddressBooks.GetAddressBook(addBookName);
+                        flag = true;
+                        break;
+                    case 2:
+                        Console.WriteLine("Enter name of Address Book");
+                        addBookName = Console.ReadLine();
+                        addressBook = multipleAddressBooks.GetAddressBook(addBookName);
+                        flag = true;
+                        if (addressBook == null)
                         {
-                            newProgram.book.AddPerson();
-                            if (newProgram.book.CheckDuplicate())
-                            { break; }
-                            else
+                            Console.WriteLine("No such Address Book");
+                            flag = false;
+                        }
+                        break;
+                    default:
+                        flag = false;
+                        Console.WriteLine("Invalid Choice");
+                        break;
+                }
+                bool exist = true;
+                while (exist)
+                {
+                    Console.WriteLine("Select the option. \n1. Add new contact. \n2. Edit existing contact. \n3. Delete existing contact \n4. Search a contact" +
+                        " by city \n5. Search a contact by state \n6.Count By City \n7.Count By State \n8.Exit");
+                    int option = int.Parse(Console.ReadLine());
+                    switch (option)
+                    {
+                        case 1:
                             {
-                                Book.Add(BookName, ContactSet);
-                                Console.WriteLine("Contact added!");
-                                Console.WriteLine("New count of contacts in address book : " + Book.Count);
+                                addressBook.AddPerson();
+                                if (addressBook.CheckDuplicate())
+                                { break; }
+                                else
+                                { 
+                                    Console.WriteLine("Contact added!");
+                                    break;
+                                }
+                            }
+                        case 2:
+                            {
+                                Console.WriteLine("Enter the first name of that person: ");
+                                addressBook.EditPersonDetails();
                                 break;
                             }
-                        }
-                    case 2:
-                        {
-                            Console.WriteLine("Enter the first name of that person: ");
-                            newProgram.book.EditPersonDetails();
+                        case 3:
+                            {
+                                Console.WriteLine("Enter the first name of that person: ");
+                                addressBook.DeletePersonDetails();
+                                break;
+                            }
+                        case 4:
+                            {
+                                Console.WriteLine("Enter the city: ");
+                                string city = Console.ReadLine();
+                                multipleAddressBooks.SearchPersonOverMultipleAddressBook(city);
+                                break;
+                            }
+                        case 5:
+                            {
+                                Console.WriteLine("Enter the state: ");
+                                string state = Console.ReadLine();
+                                multipleAddressBooks.SearchPersonOverMultipleAddressBook(state);
+                                break;
+                            }
+                        case 6:
+                            multipleAddressBooks.SetContactByCityDictionary();
+                            foreach (var contactByCity in multipleAddressBooks.ContactByCity)
+                            {
+                                Console.WriteLine("City :" + contactByCity.Key + "   Count :" + contactByCity.Value.Count);
+
+                            }
                             break;
-                        }
-                    case 3:
-                        {
-                            Console.WriteLine("Enter the first name of that person: ");
-                            newProgram.book.DeletePersonDetails();
-                            Console.WriteLine("New count of contacts in address book : " + Book.Count);
+                        case 7:
+                            multipleAddressBooks.SetContactByStateDictionary();
+                            foreach (var contactByState in multipleAddressBooks.ContactByState)
+                            {
+                                Console.WriteLine("State :" + contactByState.Key + "   Count :" + contactByState.Value.Count);
+
+                            }
                             break;
-                        }
-                    case 4:
-                        {
-                            SearchContacts.SearchByCity();
-                            break;
-                        }
-                    case 5:
-                        {
-                            SearchContacts.SearchByState();
-                            break;
-                        }
-                    case 6:
-                        {
-                            exist = false;
-                            break;
-                        }
+                        case 8:
+                            {
+                                exist = false;
+                                break;
+                            }
+                    }
                 }
             }
         }
