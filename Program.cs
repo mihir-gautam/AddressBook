@@ -141,6 +141,8 @@ namespace AddressBook
                     addressBook.ReadFromStreamReader();
                     AddressBooks.ImplementCSVDataHandling();
                     AddressBooks.WriteCSVFile(addressBook.contactList);
+                    AddressBooks.WriteToJsonFile(addressBook.contactList);
+                    AddressBooks.ReadJsonFile();
                 }
             }
         }
