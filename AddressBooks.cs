@@ -1,6 +1,8 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
@@ -155,24 +157,18 @@ namespace AddressBook
             List<string> SortedByName = new List<string>();
             foreach (Contact contact in contactList)
             {
-                string name = contact.FirstName.ToString();
-                SortedByName.Add(name);
+                string byName = contact.ToString();
+                SortedByName.Add(byName);
             }
             SortedByName.Sort();
-            foreach (Contact c in contactList)
+            foreach (string c in SortedByName)
             {
-                Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.Phone + "\t" + c.Email);
+                Console.WriteLine(c);
             }
         }
         public void SortByCity()
         {
-            List<string> SortedByCity = new List<string>();
-            foreach (Contact contact in contactList)
-            {
-                string city = contact.City.ToString();
-                SortedByCity.Add(city);
-            }
-            SortedByCity.Sort();
+            contactList.Sort(new Comparison<Contact>((x, y) => string.Compare(x.City, y.City)));
             foreach (Contact c in contactList)
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.Phone + "\t" + c.Email);
@@ -180,13 +176,7 @@ namespace AddressBook
         }
         public void SortByState()
         {
-            List<string> SortedByState = new List<string>();
-            foreach (Contact contact in contactList)
-            {
-                string city = contact.City.ToString();
-                SortedByState.Add(city);
-            }
-            SortedByState.Sort();
+            contactList.Sort(new Comparison<Contact>((x, y) => string.Compare(x.State, y.State)));
             foreach (Contact c in contactList)
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.Phone + "\t" + c.Email);
@@ -194,13 +184,7 @@ namespace AddressBook
         }
         public void SortByZip()
         {
-            List<string> SortedByZip = new List<string>();
-            foreach (Contact contact in contactList)
-            {
-                string zip = contact.ZipCode.ToString();
-                SortedByZip.Add(zip);
-            }
-            SortedByZip.Sort();
+            contactList.Sort(new Comparison<Contact>((x, y) => string.Compare(x.ZipCode, y.ZipCode)));
             foreach (Contact c in contactList)
             {
                 Console.WriteLine(c.FirstName + "\t" + c.LastName + "\t" + c.Address + "\t" + c.City + "\t" + c.State + "\t" + c.ZipCode + "\t" + c.Phone + "\t" + c.Email);
@@ -235,12 +219,12 @@ namespace AddressBook
                     foreach (Contact contact in contactList)
                     {
                         streamWriter.Write("\n"+contact.FirstName);
-                        streamWriter.Write(" "+contact.LastName);
-                        streamWriter.Write(" "+contact.Address);
-                        streamWriter.Write(" "+contact.City);
-                        streamWriter.Write(" "+contact.State);
-                        streamWriter.Write(" "+contact.Phone);
-                        streamWriter.Write(" "+contact.Email);
+                        streamWriter.Write("\t "+contact.LastName);
+                        streamWriter.Write("\t "+contact.Address);
+                        streamWriter.Write("\t "+contact.City);
+                        streamWriter.Write("\t "+contact.State);
+                        streamWriter.Write("\t "+contact.Phone);
+                        streamWriter.Write("\t "+contact.Email);
                     }
                     streamWriter.Close();
                 }
@@ -248,6 +232,38 @@ namespace AddressBook
             else
             {
                 Console.WriteLine("File does not exist");
+            }
+        }
+        public static void ImplementCSVDataHandling()
+        {
+            string filePath = @"C:\Users\Mihir Gautam\source\repos\AddressBook\addressBookContacts.csv";
+            using (var reader = new StreamReader(filePath))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<Contact>().ToList();
+                Console.WriteLine("Data Reading done successfully from contact.csv file");
+                foreach (Contact contact in records)
+                {
+                    Console.Write("\t" + contact.FirstName);
+                    Console.Write("\t" + contact.LastName);
+                    Console.Write("\t" + contact.Address);
+                    Console.Write("\t" + contact.City);
+                    Console.Write("\t" + contact.State);
+                    Console.Write("\t" + contact.ZipCode);
+                    Console.Write("\t" + contact.Phone);
+                    Console.Write("\t" + contact.Email);
+                    Console.Write("\n");
+                }
+            }
+        }
+        public static void WriteCSVFile(List<Contact> data)
+        {
+            string filePath = @"C:\Users\Mihir Gautam\source\repos\AddressBook\addressBookContacts.csv";
+            using (var writer = new StreamWriter(filePath))
+            using (var csvWrite = new CsvWriter(writer, CultureInfo.InvariantCulture))
+            {
+                Console.WriteLine("Data Writing done successfully from contact.csv file");
+                csvWrite.WriteRecords(data);
             }
         }
     }
