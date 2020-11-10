@@ -65,13 +65,14 @@ namespace AddressBook
             Contact toFind = contactList.Find((person) => person.FirstName == firstName);
             return toFind;
         }
-        public void EditPersonDetails()
+        public Contact EditPersonDetails()
         {
             string firstName = Console.ReadLine();
             Contact editedContact = FindPerson(firstName);
             if (editedContact == null)
             {
                 Console.WriteLine("Address for {0} count not be found.", firstName);
+                return null;
             }
             else
             {
@@ -91,6 +92,7 @@ namespace AddressBook
                 Console.WriteLine("New Email");
                 editedContact.Email = Console.ReadLine();
                 Console.WriteLine("Contact details updated successfully!");
+                return editedContact;
             }
         }
         public void DeletePersonDetails()

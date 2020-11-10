@@ -11,7 +11,21 @@ namespace AddressBook
         static void Main(string[] args)
         {
             AddressBookConnectionToDB dataFromDB = new AddressBookConnectionToDB();
-            dataFromDB.RetrieveFromDatabase();
+            AddressBooks addressBooks = new AddressBooks();
+            Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table");
+            int option = int.Parse(Console.ReadLine());
+            switch (option)
+            {
+                case 1:
+                    dataFromDB.RetrieveFromDatabase();
+                    break;
+                case 2:
+                    Console.WriteLine("Enter FirstName");
+                    Contact contact = addressBooks.EditPersonDetails();
+                    dataFromDB.UpdateContact(contact);
+                    break;
+            }
+
             //int choice = 0;
             //bool flag = true;
             //string addBookName = "";

@@ -70,5 +70,35 @@ namespace AddressBook
             }
             return false;
         }
+        public bool UpdateContact(Contact contact)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    string query = @"Update Contact_Info set PhoneNumber = '" + contact.Phone + "/, Email = -" + contact.Email +
+                                    "/ where FirstName = -" + contact.FirstName + "/ and LastName = -" + contact.LastName + "/";
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    connection.Close();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
+        }
     }
 }
