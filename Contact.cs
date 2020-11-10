@@ -19,6 +19,7 @@ namespace AddressBook
         public string Email { get; set; }
         public string BookName { get; set; }
         public string ContactType { get; set; }
+        public string JoiningDate { get; set; }
         public static void CreateContact()
         {
             List<Contact> Person = new List<Contact>();

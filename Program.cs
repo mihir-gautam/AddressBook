@@ -12,7 +12,7 @@ namespace AddressBook
         {
             AddressBookConnectionToDB dataFromDB = new AddressBookConnectionToDB();
             AddressBooks addressBooks = new AddressBooks();
-            Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table");
+            Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table \n3.Delete a contact");
             int option = int.Parse(Console.ReadLine());
             switch (option)
             {
@@ -23,6 +23,13 @@ namespace AddressBook
                     Console.WriteLine("Enter FirstName");
                     Contact contact = addressBooks.EditPersonDetails();
                     dataFromDB.UpdateContact(contact);
+                    break;
+                case 3:
+                    Console.WriteLine("Enter Start date");
+                    DateTime startDate = Convert.ToDateTime(Console.ReadLine());
+                    Console.WriteLine("Enter End date");
+                    DateTime endDate = Convert.ToDateTime(Console.ReadLine());
+                    dataFromDB.DeleteContacts(startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
                     break;
             }
 
