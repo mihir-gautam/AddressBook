@@ -12,7 +12,8 @@ namespace AddressBook
         {
             AddressBookConnectionToDB dataFromDB = new AddressBookConnectionToDB();
             AddressBooks addressBooks = new AddressBooks();
-            Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table \n3.Delete a contact");
+            Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table \n3.Delete a contact" +
+                "\n4.Retrieve A contact by city and state");
             int option = int.Parse(Console.ReadLine());
             switch (option)
             {
@@ -30,6 +31,13 @@ namespace AddressBook
                     Console.WriteLine("Enter End date");
                     DateTime endDate = Convert.ToDateTime(Console.ReadLine());
                     dataFromDB.DeleteContacts(startDate.ToString("yyyy-MM-dd"), endDate.ToString("yyyy-MM-dd"));
+                    break;
+                case 4:
+                    Console.WriteLine("Enter city");
+                    string city = Console.ReadLine();
+                    Console.WriteLine("Enter state");
+                    string state = Console.ReadLine();
+                    dataFromDB.RetrieveContactByCityOrState(city, state);
                     break;
             }
 
