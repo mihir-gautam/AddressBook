@@ -13,7 +13,7 @@ namespace AddressBook
             AddressBookConnectionToDB dataFromDB = new AddressBookConnectionToDB();
             AddressBooks addressBooks = new AddressBooks();
             Console.WriteLine("Enter your choice: \n1.Show all contacts in the database \n2.Update database contact table \n3.Delete a contact" +
-                "\n4.Retrieve A contact by city and state");
+                "\n4.Retrieve A contact by city and state \n5.Add new contact");
             int option = int.Parse(Console.ReadLine());
             switch (option)
             {
@@ -38,6 +38,31 @@ namespace AddressBook
                     Console.WriteLine("Enter state");
                     string state = Console.ReadLine();
                     dataFromDB.RetrieveContactByCityOrState(city, state);
+                    break;
+                case 5:
+                    Contact newContact = new Contact();
+                    Console.WriteLine("Enter the person details to be added in the address book");
+                    Console.WriteLine("First Name");
+                    newContact.FirstName = Console.ReadLine();
+                    Console.WriteLine("Last Name");
+                    newContact.LastName = Console.ReadLine();
+                    Console.WriteLine("Address");
+                    newContact.Address = Console.ReadLine();
+                    Console.WriteLine("City");
+                    newContact.City = Console.ReadLine();
+                    Console.WriteLine("State");
+                    newContact.State = Console.ReadLine();
+                    Console.WriteLine("ZipCode");
+                    newContact.ZipCode = Console.ReadLine();
+                    Console.WriteLine("Phone Number");
+                    newContact.Phone = Console.ReadLine();
+                    Console.WriteLine("Email");
+                    newContact.Email = Console.ReadLine();
+                    Console.WriteLine("ContactType");
+                    newContact.ContactType = Console.ReadLine();
+                    Console.WriteLine("Joining Date");
+                    //newContact.Joiningdate = Convert.ToDateTime(Console.ReadLine());
+                    bool isContactAdded = dataFromDB.AddContactToDB(newContact);
                     break;
             }
 

@@ -153,7 +153,7 @@ namespace AddressBook
                             contact.LastName = !dr.IsDBNull(2) ? dr.GetString(2) : "";
                             contact.Phone = !dr.IsDBNull(3) ? dr.GetString(3) : "";
                             contact.Email = !dr.IsDBNull(4) ? dr.GetString(4) : "";
-                            contact.JoiningDate = !dr.IsDBNull(5) ? dr.GetDateTime(5) : Convert.ToDateTime("01 -01-2019");
+                            //contact.JoiningDate = !dr.IsDBNull(5) ? dr.GetDateTime(5) : Convert.ToDateTime("01 -01-2019");
                             contact.ContactType = !dr.IsDBNull(7) ? dr.GetString(7) : "";
                             contact.Address = !dr.IsDBNull(9) ? dr.GetString(9) : "";
                             contact.City = !dr.IsDBNull(10) ? dr.GetString(10) : "";
@@ -180,6 +180,44 @@ namespace AddressBook
             {
                 connection.Close();
             }
+        }
+        public bool AddContactToDB(Contact contact)
+        {
+            SqlConnection connection = new SqlConnection(connectionString);
+            try
+            {
+                using (connection)
+                {
+                    SqlCommand command = new SqlCommand("SpAddContactDetails", connection);
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@FirstName", contact.FirstName);
+                    command.Parameters.AddWithValue("@LastName", contact.LastName);
+                    command.Parameters.AddWithValue("@PhoneNumber", contact.Phone);
+                    command.Parameters.AddWithValue("@Email", contact.Email);
+                    command.Parameters.AddWithValue("@JoiningDate", contact.JoiningDate);
+                    command.Parameters.AddWithValue("@Contact_Type", contact.ContactType);
+                    command.Parameters.AddWithValue("@Address", contact.Address);
+                    command.Parameters.AddWithValue("@City", contact.City);
+                    command.Parameters.AddWithValue("@State", contact.State);
+                    command.Parameters.AddWithValue("@ZipCode", contact.ZipCode);
+                    connection.Open();
+                    var result = command.ExecuteNonQuery();
+                    if (result != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.Message);
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return false;
         }
     }
 }
