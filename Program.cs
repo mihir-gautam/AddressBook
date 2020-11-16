@@ -40,29 +40,37 @@ namespace AddressBook
                     dataFromDB.RetrieveContactByCityOrState(city, state);
                     break;
                 case 5:
-                    Contact newContact = new Contact();
-                    Console.WriteLine("Enter the person details to be added in the address book");
-                    Console.WriteLine("First Name");
-                    newContact.FirstName = Console.ReadLine();
-                    Console.WriteLine("Last Name");
-                    newContact.LastName = Console.ReadLine();
-                    Console.WriteLine("Address");
-                    newContact.Address = Console.ReadLine();
-                    Console.WriteLine("City");
-                    newContact.City = Console.ReadLine();
-                    Console.WriteLine("State");
-                    newContact.State = Console.ReadLine();
-                    Console.WriteLine("ZipCode");
-                    newContact.ZipCode = Console.ReadLine();
-                    Console.WriteLine("Phone Number");
-                    newContact.Phone = Console.ReadLine();
-                    Console.WriteLine("Email");
-                    newContact.Email = Console.ReadLine();
-                    Console.WriteLine("ContactType");
-                    newContact.ContactType = Console.ReadLine();
-                    Console.WriteLine("Joining Date");
-                    //newContact.Joiningdate = Convert.ToDateTime(Console.ReadLine());
-                    bool isContactAdded = dataFromDB.AddContactToDB(newContact);
+                    Console.WriteLine("Enter Number of contacts to be added");
+                    int noOfContactAdded = Convert.ToInt32(Console.ReadLine());
+                    List<Contact> list = new List<Contact>();
+                    while (noOfContactAdded >= 1)
+                    {
+                        Contact newContact = new Contact();
+                        Console.WriteLine("Enter the person details to be added in the address book");
+                        Console.WriteLine("First Name");
+                        newContact.FirstName = Console.ReadLine();
+                        Console.WriteLine("Last Name");
+                        newContact.LastName = Console.ReadLine();
+                        Console.WriteLine("Address");
+                        newContact.Address = Console.ReadLine();
+                        Console.WriteLine("City");
+                        newContact.City = Console.ReadLine();
+                        Console.WriteLine("State");
+                        newContact.State = Console.ReadLine();
+                        Console.WriteLine("Zip code");
+                        newContact.ZipCode = Console.ReadLine();
+                        Console.WriteLine("Phone Number");
+                        newContact.Phone = Console.ReadLine();
+                        Console.WriteLine("Email");
+                        newContact.Email = Console.ReadLine();
+                        Console.WriteLine("ContactType");
+                        newContact.ContactType = Console.ReadLine();
+                        Console.WriteLine("Joining Date");
+                        newContact.JoiningDate = Convert.ToDateTime(Console.ReadLine());
+                        list.Add(newContact);
+                        noOfContactAdded--;
+                    }
+                    noOfContactAdded = dataFromDB.AddMultipleContactsUsingThreads(list);
                     break;
             }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AddressBook
 {
@@ -11,6 +12,10 @@ namespace AddressBook
         SqlConnection connection;
         List<Contact> contactList = new List<Contact>();
         int count;
+        /// <summary>
+        /// method to retrieve data from database
+        /// </summary>
+        /// <returns></returns>
         public bool RetrieveFromDatabase()
         {
             connection = new SqlConnection(connectionString);
@@ -70,6 +75,11 @@ namespace AddressBook
             }
             return false;
         }
+        /// <summary>
+        /// Method to update contact to the database
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <returns></returns>
         public bool UpdateContact(Contact contact)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -100,6 +110,12 @@ namespace AddressBook
             }
             return false;
         }
+        /// <summary>
+        /// Method to delete contact in the address book database
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <returns></returns>
         public int DeleteContacts(string startDate, string endDate)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -133,6 +149,11 @@ namespace AddressBook
             }
             return contactsDeleted;
         }
+        /// <summary>
+        /// Method to retrieve contacts by giving city or state as parameter
+        /// </summary>
+        /// <param name="city"></param>
+        /// <param name="state"></param>
         public void RetrieveContactByCityOrState(string city, string state)
         {
             SqlConnection connection = new SqlConnection(connectionString);
@@ -218,6 +239,25 @@ namespace AddressBook
                 connection.Close();
             }
             return false;
+        }
+        /// <summary>
+        /// Method to add multiple contacts to database using thread
+        /// </summary>
+        /// <param name="list"></param>
+        /// <returns></returns>
+        public int AddMultipleContactsUsingThreads(List<Contact> list)
+        {
+            int noOfContactsAdded = 0;
+            list.ForEach(contact =>
+            {
+                noOfContactsAdded++;
+                Task thread = new Task(() =>
+                {
+                    bool isAdded = AddContactToDB(contact);
+                });
+                thread.Start();
+            });
+            return noOfContactsAdded;
         }
     }
 }
