@@ -23,17 +23,6 @@
       "Email": "aman@gmail.com"
     },
     {
-      "id": 3,
-      "FirstName": "Punit",
-      "LastName": "Singh",
-      "Address": "1213",
-      "City": "Mumbai",
-      "State": "mh",
-      "ZipCode": "222220",
-      "Phone": "9821242543",
-      "Email": "punit@gmail.com"
-    },
-    {
       "id": 4,
       "FirstName": "Abhijeet",
       "LastName": "Kumar",
