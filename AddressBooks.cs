@@ -17,36 +17,59 @@ namespace AddressBook
         public HashSet<Contact> ContactSet = new HashSet<Contact>();
         List<Contact> Person = new List<Contact>();
         HashSet<string> ContactName = new HashSet<string>();
+        Patterns pattern = new Patterns();
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
+        public string Phone { get; private set; }
+        public string email { get; private set; }
 
         public AddressBooks()
         {
             contactList = new List<Contact>();
 
         }
-
         public void AddPerson()
         {
             Contact contact = new Contact();
-            Console.Write("Enter First Name: ");
-            contact.FirstName = Console.ReadLine();
-            Console.Write("Enter Last Name: ");
-            contact.LastName = Console.ReadLine();
-            Console.Write("Enter Address : ");
-            contact.Address = Console.ReadLine();
-            Console.Write("Enter City : ");
-            contact.City = Console.ReadLine();
-            Console.Write("Enter State : ");
-            contact.State = Console.ReadLine();
-            Console.Write("Enter Zip Code : ");
-            contact.ZipCode = Console.ReadLine();
-            Console.Write("Enter Phone Number : ");
-            contact.Phone = Console.ReadLine();
-            Console.Write("Enter Email ID : ");
-            contact.Email = Console.ReadLine();
-
-            contactList.Add(contact);
+            bool loop = true ;
+            while (loop)
+            {
+                Console.Write("Enter First Name: ");
+                contact.FirstName = Console.ReadLine();
+                while (pattern.ValidateName(contact.FirstName))
+                {
+                    Console.Write("Enter Last Name: ");
+                    contact.LastName = Console.ReadLine();
+                    while (pattern.ValidateName(contact.LastName))
+                    {
+                        Console.Write("Enter Address : ");
+                        contact.Address = Console.ReadLine();
+                        Console.Write("Enter City : ");
+                        contact.City = Console.ReadLine();
+                        Console.Write("Enter State : ");
+                        contact.State = Console.ReadLine();
+                        Console.Write("Enter Zip Code : ");
+                        contact.ZipCode = Console.ReadLine();
+                        Console.Write("Enter Phone Number : ");
+                        contact.Phone = Console.ReadLine();
+                        while (pattern.ValidateMobile(contact.Phone.ToString()))
+                        {
+                            Console.Write("Enter Email ID : ");
+                            contact.Email = Console.ReadLine();
+                            while (pattern.ValidateEmail(contact.Email.ToString()))
+                            {
+                                contactList.Add(contact);
+                                loop = false;
+                                break;
+                            }
+                            if (loop == false) { break; }
+                        }
+                        if (loop == false) { break; }
+                    }
+                    if (loop == false) { break; }
+                }
+                if(loop == false) { break; }
+            }
         }
         public bool CheckDuplicate()
         {

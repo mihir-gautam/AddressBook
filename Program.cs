@@ -22,25 +22,23 @@ namespace AddressBook
 
                 Console.WriteLine("1.Add Address Book\n2.Open Address Book");
                 choice = Convert.ToInt32(Console.ReadLine());
-
+                Console.WriteLine("Enter name of Address Book");
+                addBookName = Console.ReadLine();
                 switch (choice)
                 {
                     case 1:
-                        Console.WriteLine("Enter name of Address Book");
-                        addBookName = Console.ReadLine();
                         multipleAddressBooks.AddAddressBook(addBookName);
                         addressBook = multipleAddressBooks.GetAddressBook(addBookName);
                         flag = true;
                         break;
                     case 2:
-                        Console.WriteLine("Enter name of Address Book");
-                        addBookName = Console.ReadLine();
                         addressBook = multipleAddressBooks.GetAddressBook(addBookName);
                         flag = true;
                         if (addressBook == null)
                         {
                             Console.WriteLine("No such Address Book");
                             flag = false;
+                            continue;
                         }
                         break;
                     default:
@@ -65,6 +63,13 @@ namespace AddressBook
                                 else
                                 { 
                                     Console.WriteLine("Contact added!");
+                                    addressBook.WriteWithStreamWriter(addBookName);
+                                    Console.WriteLine("Contact details have been written to file successfully");
+                                    addressBook.ReadFromStreamReader();
+                                    AddressBooks.ImplementCSVDataHandling();
+                                    AddressBooks.WriteCSVFile(addressBook.contactList);
+                                    AddressBooks.WriteToJsonFile(addressBook.contactList);
+                                    AddressBooks.ReadJsonFile();
                                     break;
                                 }
                             }
@@ -72,6 +77,13 @@ namespace AddressBook
                             {
                                 Console.WriteLine("Enter the first name of that person: ");
                                 addressBook.EditPersonDetails();
+                                addressBook.WriteWithStreamWriter(addBookName);
+                                Console.WriteLine("Contact details have been written to file successfully");
+                                addressBook.ReadFromStreamReader();
+                                AddressBooks.ImplementCSVDataHandling();
+                                AddressBooks.WriteCSVFile(addressBook.contactList);
+                                AddressBooks.WriteToJsonFile(addressBook.contactList);
+                                AddressBooks.ReadJsonFile();
                                 break;
                             }
                         case 3:
@@ -136,13 +148,7 @@ namespace AddressBook
                                 break;
                             }
                     }
-                    addressBook.WriteWithStreamWriter(addBookName);
-                    Console.WriteLine("Contact details have been written to file successfully");
-                    addressBook.ReadFromStreamReader();
-                    AddressBooks.ImplementCSVDataHandling();
-                    AddressBooks.WriteCSVFile(addressBook.contactList);
-                    AddressBooks.WriteToJsonFile(addressBook.contactList);
-                    AddressBooks.ReadJsonFile();
+                    
                 }
             }
         }
