@@ -18,12 +18,6 @@ namespace AddressBook
         public string Phone { get; set; }
         public string Email { get; set; }
         public string BookName { get; set; }
-        public string ContactType { get; set; }
-        public DateTime JoiningDate { get; set; }
-        //public DateTime Joiningdate { get; set; }
-        public static void CreateContact()
-        {
-            List<Contact> Person = new List<Contact>();
-        }
+        
     }
 }
